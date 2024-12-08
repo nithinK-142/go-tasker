@@ -2,22 +2,19 @@ package main
 
 import (
 	"log"
-	"github.com/gin-gonic/gin"
+	"server/database"
+	"server/routes"
 )
 
 func main() {
-	// Create a Gin router
-	router := gin.Default()
+	// Initialize the database
+	database.InitDB()
 
-	// Define the route for GET request at the root
-	router.GET("/", func(c *gin.Context) {
-		c.String(200, "Hello, World!")
-	})
+	// Set up routes
+	router := routes.SetupRouter()
 
-	// Log that the server is running
+	// Start the server
 	log.Println("Server running on http://localhost:8080")
-
-	// Start the Gin server on port 8080
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
